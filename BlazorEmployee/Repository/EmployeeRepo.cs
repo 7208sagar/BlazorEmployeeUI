@@ -27,17 +27,17 @@ namespace BlazorEmployee.Repository
             throw new NotImplementedException();
         }
 
-        public Employee Get(string employeeId)
+        public EmployeeModel Get(string employeeId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Employee> Gets()
+        public List<EmployeeModel> Gets()
         {
             throw new NotImplementedException();
         }
 
-        public Employee Save(Employee employee)
+        public EmployeeModel Save(EmployeeModel employee)
         {
             throw new NotImplementedException();
         }

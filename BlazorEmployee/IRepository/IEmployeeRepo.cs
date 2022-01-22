@@ -8,9 +8,9 @@ namespace BlazorEmployee.IRepository
 {
    public interface IEmployeeRepo
     {
-        Employee Save(Employee employee);
-        Employee Get(String employeeId);
-        List<Employee> Gets();
+        EmployeeModel Save(EmployeeModel employee);
+        EmployeeModel Get(String employeeId);
+        List<EmployeeModel> Gets();
         string Delete(string employeeId);
 
     }
