@@ -1,0 +1,86 @@
+﻿@page "/getEmpdata"
+
+@using BlazorEmployee.model
+
+@using DataLayer.Data
+
+
+
+@using BlazorEmployee.Data
+@using ServiceLayer;
+
+@inject IEmployeeServices newEmp
+
+@inject NavigationManager navigation
+
+
+
+
+
+
+
+<form>
+    <div class="mainbox">
+        <div class="emplogo">
+            <img class="logoimg" src="./Assets/images/logo.png" />
+            <p class="header"><b>Employee Payroll</b></p>
+        </div>
+        <h1 class="h1">Employee Data</h1>
+        <div>
+            <p>Employee Data from the server is displayed below</p>
+            <p>
+                <a class="btn btn-outline-success btn-sm" href="/CreateEMP/@Emp._id" role="button"> Creaate Employee</a>
+            </p>
+        </div>
+        @if (EmpMod == null)
+        {
+            <p><em>Loading....</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead class="headcolor">
+                    <tr>
+                        <th>Employee Id</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>Notes</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody class="body">
+                    @foreach(var emp in EmpMod)
+                {
+                    <tr>
+                        <td>@emp._id</td>
+                        <td>@emp.EmpName</td>
+                        <td>@emp.Department</td>
+                        <td>@emp.Salary</td>
+                        <td>@emp.Notes</td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" href=""></a>
+                            <a class="btn btn-outline-primary btn-sm" href=""></a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </div>
+</form>
+
+
+@code {
+    List<EmployeeM> EmpMod = new List<EmployeeM>();
+    EmployeeM Emp = new EmployeeM();
+
+    [Parameter]
+    public string CurrentID { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        EmpMod = await Task.Run(() => newEmp.GetEmployees());
+    }
+
+}

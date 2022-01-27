@@ -75,8 +75,36 @@ using BlazorEmployee.Shared;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/EmployeePayroll")]
-    public partial class Demo : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 4 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\DeleteEmp.razor"
+using BlazorEmployee.model;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\DeleteEmp.razor"
+using DataLayer.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\DeleteEmp.razor"
+using BlazorEmployee.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\DeleteEmp.razor"
+using ServiceLayer;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/Delete/{EmpID}")]
+    public partial class DeleteEmp : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -84,25 +112,32 @@ using BlazorEmployee.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 174 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\Demo.razor"
+#line 66 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\DeleteEmp.razor"
        
-    //public bool Checksubmit = true;
-    //Employee Emp = new Employee();
+    [Parameter]
+    public string EmpId { get; set; }
 
-    //protected void CreateEMP()
-    //{
-    //    newEmp.Create(Emp);
-    //    Navigation.NavigateTo("empwage");
-    //}
-    //void Cancel()
-    //{
-    //    Navigation.NavigateTo("empwage");
-    //}
+    EmployeeM emp = new EmployeeM();
 
+    protected void Delete()
+    {
+        newEmp.Delete(EmpId);
+        navigation.NavigateTo("/getempdata");
+    }
+    protected void Cancle()
+    {
+        navigation.NavigateTo("/getempdata");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        emp = await Task.Run(() => newEmp.GetEmployee(EmpId));
+    }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navigation { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEmployeeServices newEmp { get; set; }
     }
 }
 #pragma warning restore 1591

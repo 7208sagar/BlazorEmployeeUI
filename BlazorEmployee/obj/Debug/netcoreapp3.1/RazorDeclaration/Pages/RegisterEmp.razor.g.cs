@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace BlazorEmployee.Shared
+namespace BlazorEmployee.Pages
 {
     #line hidden
     using System;
@@ -75,7 +75,36 @@ using BlazorEmployee.Shared;
 #line default
 #line hidden
 #nullable disable
-    public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 3 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\RegisterEmp.razor"
+using BlazorEmployee.model;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\RegisterEmp.razor"
+using DataLayer.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 9 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\RegisterEmp.razor"
+using BlazorEmployee.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\RegisterEmp.razor"
+using ServiceLayer;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/EmployeePayroll")]
+    public partial class RegisterEmp : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -83,20 +112,40 @@ using BlazorEmployee.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 46 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Shared\NavMenu.razor"
+#line 133 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\RegisterEmp.razor"
        
-    private bool collapseNavMenu = true;
+    public bool Checksubmit = true;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    EmployeeM emp1 = new EmployeeM();
 
-    private void ToggleNavMenu()
+    protected void CreateEMP()
     {
-        collapseNavMenu = !collapseNavMenu;
+        newEmp.Create(emp1);
+        navigation.NavigateTo("empwage");
     }
+    void Cancel()
+    {
+        navigation.NavigateTo("empwage");
+    }
+    protected void adding(string img)
+    {
+        emp1.ProfileImage = img;
+    }
+    protected void reset()
+    {
+        navigation.NavigateTo("/craeteEMP");
+    }
+    protected void home()
+    {
+        navigation.NavigateTo("/GetEmployees");
+    }
+    public bool CheckSubmit = true;
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navigation { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEmployeeServices newEmp { get; set; }
     }
 }
 #pragma warning restore 1591

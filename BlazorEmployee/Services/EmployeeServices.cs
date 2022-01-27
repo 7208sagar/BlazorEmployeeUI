@@ -10,22 +10,22 @@ namespace ServiceLayer
 {
    public class EmployeeServices : IEmployeeServices
     {
-        public readonly IMongoDatabase db;
-        public readonly IMongoCollection<Employee> table;
+        public readonly IMongoDatabase _db;
+        public readonly IMongoCollection<EmployeeM> table;
 
         public EmployeeServices(IOptions<Settings> options)
         {
             var Client = new MongoClient(options.Value.ConnectionString);
-            db = Client.GetDatabase(options.Value.DatabaseName);
+            _db = Client.GetDatabase(options.Value.DatabaseName);
         }
 
-        public IMongoCollection<Employee> Employee => db.GetCollection<Employee>("EmpBlazor");
+        public IMongoCollection<EmployeeM> EmployeeC => _db.GetCollection<EmployeeM>("EmployeeBlazor");
         
-        public Employee Create(Employee emp)
+        public EmployeeM Create(EmployeeM emp)
         {
             try
             {
-                Employee.InsertOne(emp);
+                EmployeeC.InsertOne(emp);
                 return emp;
             }
             catch(Exception e)
@@ -38,7 +38,7 @@ namespace ServiceLayer
         {
             try
             {
-                Employee.DeleteOne(x => x._id == empId);
+                EmployeeC.DeleteOne(x => x._id == empId);
                 return empId;
             }
             catch(Exception e)
@@ -46,11 +46,11 @@ namespace ServiceLayer
                 throw e;
             }
         }
-        public List<Employee> GetEmployees()
+        public List<EmployeeM> GetEmployees()
         {
             try
             {
-                return Employee.Find(x => true).ToList();
+                return EmployeeC.Find(x => true).ToList();
             }
             catch (Exception e)
             {
@@ -58,11 +58,11 @@ namespace ServiceLayer
             }
 
         }
-        public Employee GetEmployee(string _id)
+        public EmployeeM GetEmployee(string _id)
         {
             try
             {
-                var employee = Employee.Find(x => x._id == _id).FirstOrDefault();
+                var employee = EmployeeC.Find(x => x._id == _id).FirstOrDefault();
                 return employee;
             }
             catch (Exception e)
@@ -70,18 +70,18 @@ namespace ServiceLayer
                 throw e;
             }
         }
-        public void Update(Employee emp)
+        public void Update(EmployeeM emp)
         {
             try
             {
-                var newEmp = Employee.Find(x => x._id == emp._id).FirstOrDefault();
+                var newEmp = EmployeeC.Find(x => x._id == emp._id).FirstOrDefault();
                 if (newEmp == null)
                 {
-                    Employee.InsertOne(emp);
+                    EmployeeC.InsertOne(emp);
                 }
                 else
                 {
-                    Employee.ReplaceOne(x => x._id == emp._id, emp);
+                    EmployeeC.ReplaceOne(x => x._id == emp._id, emp);
                 }
             }
             catch (Exception e)

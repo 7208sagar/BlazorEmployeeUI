@@ -1,6 +1,6 @@
 using BlazorEmployee.Data;
-using BlazorEmployee.IRepository;
-using BlazorEmployee.Repository;
+//using BlazorEmployee.IRepository;
+//using BlazorEmployee.Repository;
 using DataLayer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using ServiceLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace BlazorEmployee
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            services.AddTransient<IEmployeeServices, EmployeeServices>();
             services.AddSingleton<ISettings>(x => x.GetRequiredService<IOptions<Settings>>().Value);
             services.AddSingleton<WeatherForecastService>();
             services.Configure<Settings>(options =>

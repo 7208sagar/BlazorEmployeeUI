@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace BlazorEmployee.Shared
+namespace BlazorEmployee.Pages
 {
     #line hidden
     using System;
@@ -75,7 +75,36 @@ using BlazorEmployee.Shared;
 #line default
 #line hidden
 #nullable disable
-    public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 4 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\UpdateEmp.razor"
+using BlazorEmployee.model;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\UpdateEmp.razor"
+using DataLayer.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\UpdateEmp.razor"
+using BlazorEmployee.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\UpdateEmp.razor"
+using ServiceLayer;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/Update/{CurrentID}")]
+    public partial class UpdateEmp : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -83,20 +112,36 @@ using BlazorEmployee.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 46 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Shared\NavMenu.razor"
+#line 135 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\UpdateEmp.razor"
        
-    private bool collapseNavMenu = true;
+    [Parameter]
+    public string CurrentID { get; set; }
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    EmployeeM emp = new EmployeeM();
 
-    private void ToggleNavMenu()
+    protected void Update()
     {
-        collapseNavMenu = !collapseNavMenu;
+        newEmp.Update(emp);
+        navigation.NavigateTo("/getempdata");
+    }
+    protected void Cancle()
+    {
+        navigation.NavigateTo("/getempdata");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        emp = await Task.Run(() => newEmp.GetEmployee(CurrentID));
+    }
+    protected void adding(string img)
+    {
+        emp.ProfileImage = img;
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navigation { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEmployeeServices newEmp { get; set; }
     }
 }
 #pragma warning restore 1591

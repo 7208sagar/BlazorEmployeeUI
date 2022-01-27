@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace BlazorEmployee.Shared
+namespace BlazorEmployee.Pages
 {
     #line hidden
     using System;
@@ -75,7 +75,36 @@ using BlazorEmployee.Shared;
 #line default
 #line hidden
 #nullable disable
-    public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 3 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\EmpHome.razor"
+using BlazorEmployee.model;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\EmpHome.razor"
+using DataLayer.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 9 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\EmpHome.razor"
+using BlazorEmployee.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\EmpHome.razor"
+using ServiceLayer;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/Home")]
+    public partial class EmpHome : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -83,20 +112,32 @@ using BlazorEmployee.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 46 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Shared\NavMenu.razor"
+#line 80 "C:\Users\HP\Desktop\d\BlazorEmployee\BlazorEmployee\Pages\EmpHome.razor"
        
-    private bool collapseNavMenu = true;
+    List<EmployeeM> empList = new List<EmployeeM>();
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    EmployeeM emp = new EmployeeM();
 
-    private void ToggleNavMenu()
+    [Parameter]
+    public string CurrentId { get; set; }
+    protected override async Task OnInitializedAsync()
     {
-        collapseNavMenu = !collapseNavMenu;
+        empList = await Task.Run(() => newEmp.GetEmployees());
+    }
+    void update(string CurrentId)
+    {
+        navigate.NavigateTo("/updateEmp" + CurrentId);
+    }
+    void delete(string CurrentId)
+    {
+        navigate.NavigateTo("/deleteEmp" + CurrentId);
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navigate { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IEmployeeServices newEmp { get; set; }
     }
 }
 #pragma warning restore 1591

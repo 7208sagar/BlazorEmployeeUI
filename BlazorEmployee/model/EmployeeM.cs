@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlazorEmployee.model
 {
-    public class EmployeeModel
+    public class EmployeeM
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

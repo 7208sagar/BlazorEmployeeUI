@@ -1,0 +1,160 @@
+﻿@page "/EmployeePayroll"
+
+@using BlazorEmployee.model
+
+@using DataLayer.Data
+
+
+
+@using BlazorEmployee.Data
+@using ServiceLayer;
+
+@inject IEmployeeServices newEmp
+
+@inject NavigationManager navigation
+@*<h3>Blazor Demo</h3>*@
+
+
+<!DOCTYPE html>
+<form>
+    <EditForm Model="@emp1" OnSubmit="@CreateEMP">
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="../css/Employeepayroll.css">
+            <title>Employee payroll form</title>
+        </head>
+
+        <body>
+
+            <header class="header-content header">
+
+                <div class="logo-content">
+                    <img src="../assets/images/logo.png" alt="">
+                    <div>
+                        <span class="emp-text">EMPLOYEE</span><br>
+                        <span class="emp-text emp-payroll">PAYROLL</span><br>
+                    </div>
+                </div>
+            </header>
+            <br>
+            <div class="form-content">
+                <form class="form" action="#" onreset="resetForm()" onsubmit="save()">
+                    <div class="form-head">
+                        Employee Payroll Form
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" for="name">Name</label>
+                        <input class="input" type="text" id="name" placeholder="Your name" @bind-value="@emp1.EmpName" required>
+                        <error-output class="text-error" for="text"></error-output>
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" for="profile">Profile Image</label>
+                        <div class="profile-radio-content">
+                            <label>
+                                <input type="checkbox" name="profile" value="./Assets/Ellipse -10.png"
+                                       @onchange="@(()=> adding("./Assets/Ellipse -10.png"))" />
+                               
+                                <img class="profile" id="image1" src="../assets/profile-images/Ellipse -3.png">
+                            </label>
+                            <label>
+                                <input type="checkbox" name="profile" value="./Assets/Ellipse -10.png"
+                                       @onchange="@(()=> adding("./Assets/Ellipse -10.png"))" />
+                                <img class="profile" id="image2" src="../assets/profile-images/Ellipse 1.png">
+                            </label>
+                            <label>
+                                <input type="checkbox" name="profile" value="./Assets/Ellipse -10.png"
+                                       @onchange="@(()=> adding("./Assets/Ellipse -10.png"))" />
+                                <img class="profile" id="image3" src="../assets/profile-images/Ellipse -8.png">
+                            </label>
+                            <label>
+                                <input type="checkbox" name="profile" value="./Assets/Ellipse -10.png"
+                                       @onchange="@(()=> adding("./Assets/Ellipse -10.png"))" />
+                                <img class="profile" id="image4" src="../assets/profile-images/Ellipse -7.png">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" for="gender">Gender</label>
+                        <div>
+                            <select asp-for="Gender" class="from-control" @bind="@emp1.Gender">
+                                <option value="">--Select Gender--</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" for="department">Department</label>
+                        <div>
+                            <select asp-for="Department" class="from-control" @bind="emp1.Department">
+                                <option value="">--Select Department</option>
+                                <option value="HR">HR</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Engineer">Engineer</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" for="salary">Choose Your Salary</label>
+                        <input class="Salaryinput" @bind="@emp1.Salary" type="number" name="salary" id="salary" min="3000000" defaultvalue="3500000" max="5000000" step="100" />
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" @bind-="@emp1.StartDate" for="StartDate">Start Date</label>
+                        <div >
+                            <input class="DateInput"  type="date" placeholder="">
+                        </div>
+                    </div>
+                    <div class="row-content">
+                        <label class="label text" for="notes">Notes</label>
+                        <textarea id="notes" @bind="@emp1.Notes" class="input" name="Notes" placeholder="" style="height:100px"></textarea>
+                    </div>
+                    <div class="buttonParent">
+                        <a href="./Home.html" class="resetButton button cancelButton">Cancel</a>
+                        <div class="submit-reset">
+                            <button type="submit" class="button submitButton" id="submitButton" @onclick="@(()=>home())">Submit</button>
+                            <button type="reset" class="resetButton button" id="resetButton" @onclick="@(()=>reset())">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </body>
+
+    </html>
+</EditForm>
+</form>
+
+@code {
+    public bool Checksubmit = true;
+
+    EmployeeM emp1 = new EmployeeM();
+
+    protected void CreateEMP()
+    {
+        newEmp.Create(emp1);
+        navigation.NavigateTo("empwage");
+    }
+    void Cancel()
+    {
+        navigation.NavigateTo("empwage");
+    }
+    protected void adding(string img)
+    {
+        emp1.ProfileImage = img;
+    }
+    protected void reset()
+    {
+        navigation.NavigateTo("/craeteEMP");
+    }
+    protected void home()
+    {
+        navigation.NavigateTo("/GetEmployees");
+    }
+    public bool CheckSubmit = true;
+}

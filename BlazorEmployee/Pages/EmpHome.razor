@@ -1,0 +1,99 @@
+﻿@page "/Home"
+
+@using BlazorEmployee.model
+
+@using DataLayer.Data
+
+
+
+@using BlazorEmployee.Data
+@using ServiceLayer;
+
+@inject IEmployeeServices newEmp
+
+@inject NavigationManager navigate
+
+
+<header class="flex-row-center header">
+    <div class="logo-content">
+        <img src="../assets/images/logo.png" alt="">
+        <div>
+            <span class="emp-text">EMPLOYEE</span><br>
+            <span class="emp-text emp-payroll">PAYROLL</span><br>
+        </div>
+    </div>
+</header>
+<div class="flex-column content">
+    <div class="emp-detail">
+        <div class="detail-text">
+            Employee Details <div class="count">10</div>
+        </div>
+        <a href="/EmpRegister" class="add-button flex-row-center">
+            @*<img src="/Asets/icons/add-24px.svg" alt="">*@
+            Add User
+        </a>
+    </div>
+    <div class="table-main">
+        @if (empList == null)
+        {
+            <p><em>Loading....</em></p>
+        }
+        else
+        {
+        <table id="display" class="table">
+            <tbody>
+                <tr>
+                    <th>EmpID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Start Date</th>
+                    <th>Notes</th>
+                </tr>
+            </tbody>
+            <tbody>
+                @foreach (var emp in empList)
+                {
+                    <tr>
+                        <td>@emp._id</td>
+                        <td>@emp.EmpName</td>
+                        <td>@emp.Gender</td>
+                        <td>@emp.Department</td>
+                        <td>@emp.Salary</td>
+                        <td>@emp.StartDate</td>
+                        <td>@emp.Notes</td>
+                        <td>
+                            <button class="btn btn-outline-primary" href="/update/@emp._id">Update</button>
+                            <button class="btn btn-outline-primary" href="/delete/@emp._id">Delete</button>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+</div>
+
+
+@code {
+    List<EmployeeM> empList = new List<EmployeeM>();
+
+    EmployeeM emp = new EmployeeM();
+
+    [Parameter]
+    public string CurrentId { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        empList = await Task.Run(() => newEmp.GetEmployees());
+    }
+    void update(string CurrentId)
+    {
+        navigate.NavigateTo("/updateEmp" + CurrentId);
+    }
+    void delete(string CurrentId)
+    {
+        navigate.NavigateTo("/deleteEmp" + CurrentId);
+    }
+}
